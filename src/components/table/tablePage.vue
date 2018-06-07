@@ -5,16 +5,16 @@
            :data="data"
            :highlightRow="highlightRow"
            :loading="loading"
-           @onCurrentChange="onCurrentChange"
-           @onSelect="onSelect"
-           @onSelectCancel="onSelectCancel"
-           @onSelectAll="onSelectAll">
-           @onSelectionChange="onSelectionChange">
-           @onSortChange="onSortChange">
-           @onFilterChange="onFilterChange">
-           @onRowClick="onRowClick">
-           @onRowDblclick="onRowDblclick">
-           @onExpand="onExpand">
+           @on-current-change="onCurrentChange"
+           @on-select="onSelect"
+           @on-select-cancel="onSelectCancel"
+           @on-select-all="onSelectAll">
+           @on-selection-change="onSelectionChange">
+           @on-sort-change="onSortChange">
+           @on-filter-change="onFilterChange">
+           @on-row-click="onRowClick">
+           @on-row-dblclick="onRowDblclick">
+           @on-expand="onExpand">
        <Page class="footer-page" :total="total" :current="current" @on-change="changePage" size="small" slot="footer"></Page>
     </Table>
   </div>

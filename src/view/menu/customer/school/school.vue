@@ -13,9 +13,9 @@
           <Carousel
             dots="none"
             arrow="always"
-            @onChange="carouselChange">
+            @on-change="carouselChange">
             <CarouselItem>
-              <div class="demo-carousel">1</div>
+              <div class="item-carousel">1</div>
             </CarouselItem>
             <CarouselItem>
               <div class="demo-carousel">2</div>
@@ -126,7 +126,8 @@ export default {
           address: 'Ottawa No. 2 Lake Park',
           date: '2016-10-04'
         }
-      ]
+      ],
+      value2: 0
     }
   },
   components: {
@@ -136,9 +137,8 @@ export default {
     changeView () {
       this.show = !this.show
     },
-    carouselChange (oldVaule, value) {
-      console.log(oldVaule)
-      console.log(value)
+    carouselChange (value) {
+     alert(this.value2)
     }
   }
 }
