@@ -5,26 +5,25 @@
         <span class="title">title</span>
         <Icon type="grid" class="right-icon" size="20" @click="changeView"></Icon>
       </div>
-      <transition name="fade" mode="out-in" >
+      <transition name="fade" mode="in-out">
         <div class="card-content" v-if="show" key="table">
-           <table-page :columns="columns" :data="datas"  highlightRow></table-page >
+          <table-page :columns="columns" :data="datas" highlightRow></table-page>
         </div>
         <div v-else class="card-content" key="img">
           <Carousel
             dots="none"
             arrow="always"
             @on-change="carouselChange">
-            <CarouselItem>
-              <div class="item-carousel">1</div>
-            </CarouselItem>
-            <CarouselItem>
-              <div class="demo-carousel">2</div>
-            </CarouselItem>
-            <CarouselItem>
-              <div class="demo-carousel">3</div>
-            </CarouselItem>
-            <CarouselItem>
-              <div class="demo-carousel">4</div>
+            <CarouselItem v-for="item in datas" :key="item.bizId">
+              <div class="item-carousel">
+                <Card>
+                  <h1>{{ item.name }}</h1>
+                  <template v-for="(k,v) in item.datas">
+                    <h3>{{ key }}</h3>
+                    <image-preview v-for="url in v" :imgSrc="url"></image-preview>
+                  </template>
+                </Card>
+              </div>
             </CarouselItem>
           </Carousel>
         </div>
@@ -35,111 +34,77 @@
 <script>
 import './school.less'
 import tablePage from '@/components/table/tablePage'
+import imagePreview from '@/components/image/imagePreview'
+import { getApprove } from '@/api/approve'
 export default {
   data () {
     return {
       show: true,
+      cropper: {},
       columns: [
         {
-          title: 'Name',
-          key: 'name'
+          title: '业务id',
+          key: 'bizId'
         },
         {
-          title: 'Age',
-          key: 'age'
-        },
-        {
-          title: 'Address',
-          key: 'address'
+          title: '图形数据',
+          children: [
+            {
+              title: '入学申请',
+              key: 'school'
+            },
+            {
+              title: '户口本',
+              key: 'hukou'
+            },
+            {
+              title: '身份证',
+              key: 'idCard'
+            },
+            {
+              title: '疫苗证',
+              key: 'yimiao'
+            },
+            {
+              title: '劳动证明',
+              key: 'laodong'
+            }
+          ]
         }
       ],
-      datas: [
-        {
-          name: 'John Brown',
-          age: 18,
-          address: 'New York No. 1 Lake Park',
-          date: '2016-10-03'
-        },
-        {
-          name: 'Jim Green',
-          age: 24,
-          address: 'London No. 1 Lake Park',
-          date: '2016-10-01'
-        },
-        {
-          name: 'Joe Black',
-          age: 30,
-          address: 'Sydney No. 1 Lake Park',
-          date: '2016-10-02'
-        },
-        {
-          name: 'Jon Snow',
-          age: 26,
-          address: 'Ottawa No. 2 Lake Park',
-          date: '2016-10-04'
-        },
-        {
-          name: 'John Brown',
-          age: 18,
-          address: 'New York No. 1 Lake Park',
-          date: '2016-10-03'
-        },
-        {
-          name: 'Jim Green',
-          age: 24,
-          address: 'London No. 1 Lake Park',
-          date: '2016-10-01'
-        },
-        {
-          name: 'Joe Black',
-          age: 30,
-          address: 'Sydney No. 1 Lake Park',
-          date: '2016-10-02'
-        },
-        {
-          name: 'Jon Snow',
-          age: 26,
-          address: 'Ottawa No. 2 Lake Park',
-          date: '2016-10-04'
-        },
-        {
-          name: 'John Brown',
-          age: 18,
-          address: 'New York No. 1 Lake Park',
-          date: '2016-10-03'
-        },
-        {
-          name: 'Jim Green',
-          age: 24,
-          address: 'London No. 1 Lake Park',
-          date: '2016-10-01'
-        },
-        {
-          name: 'Joe Black',
-          age: 30,
-          address: 'Sydney No. 1 Lake Park',
-          date: '2016-10-02'
-        },
-        {
-          name: 'Jon Snow',
-          age: 26,
-          address: 'Ottawa No. 2 Lake Park',
-          date: '2016-10-04'
-        }
-      ],
-      value2: 0
+      datas: []
     }
   },
   components: {
-    tablePage
+    tablePage,
+    imagePreview
   },
   methods: {
     changeView () {
       this.show = !this.show
     },
     carouselChange (value) {
-     alert(this.value2)
+      if (value === this.datas.length - 1) {
+        // 如果滚动到最后一个则加载新数据
+        // this.datas = [{
+        //   name: 'tinnkm',
+        //   age: 30,
+        //   address: 'Sydney No. 1 Lake Park',
+        //   date: '2016-10-02'
+        // },
+        //   {
+        //     name: 'asss',
+        //     age: 26,
+        //     address: 'Ottawa No. 2 Lake Park',
+        //     date: '2016-10-04'
+        //   }]
+      }
     }
+  },
+  created () {
+    getApprove(1).then(res => {
+      this.datas = res.data
+    })
   }
 }
 </script>
