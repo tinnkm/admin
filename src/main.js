@@ -9,8 +9,18 @@ import i18n from '@/locale'
 import config from '@/config'
 import 'iview/dist/styles/iview.css'
 import env from '../config/env'
+import VueLazyload from 'vue-lazyload'
+
 if (env === 'development') require('@/mock')
 
+// or with options
+Vue.use(VueLazyload, {
+  preLoad: 1.3,
+  // error: 'dist/error.png',
+  // loading: 'dist/loading.gif',
+  attempt: 1,
+  lazyComponent: true
+})
 Vue.use(iView)
 Vue.config.productionTip = false
 /**

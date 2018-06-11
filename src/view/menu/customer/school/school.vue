@@ -17,10 +17,10 @@
             <CarouselItem v-for="item in datas" :key="item.bizId">
               <div class="item-carousel">
                 <Card>
-                  <h1>{{ item.name }}</h1>
-                  <template v-for="(k,v) in item.datas">
-                    <h3>{{ key }}</h3>
-                    <image-preview v-for="url in v" :imgSrc="url"></image-preview>
+                  <h1>{{ item.bizId }}</h1>
+                  <template v-for="info in item.data">
+                    <h3>{{ info.title }}</h3>
+                    <image-edit v-for="url in info.url" :imgSrc="url"></image-edit>
                   </template>
                 </Card>
               </div>
@@ -34,7 +34,7 @@
 <script>
 import './school.less'
 import tablePage from '@/components/table/tablePage'
-import imagePreview from '@/components/image/imagePreview'
+import imageEdit from '@/components/image/imageEdit'
 import { getApprove } from '@/api/approve'
 export default {
   data () {
@@ -51,23 +51,28 @@ export default {
           children: [
             {
               title: '入学申请',
-              key: 'school'
+              key: 'school',
+              render: (h, params) => params.row.data[0].url
             },
             {
               title: '户口本',
-              key: 'hukou'
+              key: 'hukou',
+              render: (h, params) => params.row.data[1].url
             },
             {
               title: '身份证',
-              key: 'idCard'
+              key: 'idCard',
+              render: (h, params) => params.row.data[2].url
             },
             {
               title: '疫苗证',
-              key: 'yimiao'
+              key: 'yimiao',
+              render: (h, params) => params.row.data[3].url
             },
             {
               title: '劳动证明',
-              key: 'laodong'
+              key: 'laodong',
+              render: (h, params) => params.row.data[4].url
             }
           ]
         }
@@ -77,7 +82,7 @@ export default {
   },
   components: {
     tablePage,
-    imagePreview
+    imageEdit
   },
   methods: {
     changeView () {
