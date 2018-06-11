@@ -20,7 +20,7 @@
                   <h1>{{ item.bizId }}</h1>
                   <template v-for="info in item.data">
                     <h3>{{ info.title }}</h3>
-                    <image-edit v-for="url in info.url" :imgSrc="url"></image-edit>
+                    <image-preview  :imgSrcs="info.url" :viewer="viewer"></image-preview>
                   </template>
                 </Card>
               </div>
@@ -34,13 +34,13 @@
 <script>
 import './school.less'
 import tablePage from '@/components/table/tablePage'
-import imageEdit from '@/components/image/imageEdit'
+import imagePreview from '@/components/image/image-preview'
 import { getApprove } from '@/api/approve'
 export default {
   data () {
     return {
       show: true,
-      cropper: {},
+      viewer: {},
       columns: [
         {
           title: '业务id',
@@ -82,7 +82,7 @@ export default {
   },
   components: {
     tablePage,
-    imageEdit
+    imagePreview
   },
   methods: {
     changeView () {

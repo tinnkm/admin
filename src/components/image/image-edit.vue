@@ -1,11 +1,9 @@
-
 <template>
   <div>
-
     <Row class="image-wrapper">
       <Col span="14">
         <div class="cropper">
-          <img  v-edit="cropperObject" data-cropper=true ref="cropper" src="../../assets/images/logo.jpg" alt="">.
+          <img v-cropper="cropperObject"   :src="imgSrc" alt="">.
         </div>
       </Col>
     </Row>
@@ -48,19 +46,13 @@
 import Cropper from 'cropperjs'
 import './cropper.min.css'
 
-import Viewer from 'viewerjs'
-import 'viewerjs/dist/viewer.css'
+
 export default {
-  name: 'imageEdit',
+  name: 'image-edit',
   props: {
     imgSrc: {
       type: String,
       default: ''
-    }
-  },
-  watch: {
-    imgSrc () {
-
     }
   },
   data () {
@@ -72,29 +64,33 @@ export default {
 
   }
   ,
+  mounted () {
+
+  },
   destroyed () {
-    this.cropperObject.cropper.destroy()
+    // this.cropperObject.cropper.destroy()
   }
   ,
   directives: {
-    edit: {
-      inserted: function (el, binding) {
-        console.log('done')
-        let _options = {
-          dragMode: 'move',
-          restore: false,
-          center: false,
-          highlight: false,
-          cropBoxMovable: false,
-          toggleDragModeOnDblclick: false,
-          background: false,
-          minContainerWidth: 300,
-          minContainerHeight: 400,
-          modal: false,
-          autoCrop: false
+    cropper: {
+      bind: function (el, binding) {
+        if (!binding.value.cropper){
+          let _options = {
+            dragMode: 'move',
+            restore: false,
+            center: false,
+            highlight: false,
+            cropBoxMovable: false,
+            toggleDragModeOnDblclick: false,
+            background: false,
+            minContainerWidth: 300,
+            minContainerHeight: 400,
+            modal: false,
+            autoCrop: false
+          }
+          let options = Object.assign(binding.value.options || {}, _options)
+          binding.value.cropper = new Cropper(el, options)
         }
-        let options = Object.assign(binding.value.options || {}, _options)
-        binding.value.cropper = new Cropper(el, options)
       }
     }
   }
