@@ -6,7 +6,6 @@ import customEnUs from './lang/en-US'
 import zhCnLocale from 'iview/src/locale/lang/zh-CN'
 import enUsLocale from 'iview/src/locale/lang/en-US'
 import zhTwLocale from 'iview/src/locale/lang/zh-TW'
-import iview from 'iview'
 Vue.use(VueI18n)
 
 // 自动根据浏览器系统语言设置语言
@@ -29,7 +28,5 @@ const i18n = new VueI18n({
   messages
 })
 
-Vue.use(iview, {
-  i18n: (key, value) => i18n.t(key, value)
-})
+
 export default i18n

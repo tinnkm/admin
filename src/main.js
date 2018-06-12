@@ -21,7 +21,9 @@ Vue.use(VueLazyload, {
   attempt: 1,
   lazyComponent: true
 })
-Vue.use(iView)
+Vue.use(iView, {
+  i18n: (key, value) => i18n.t(key, value)
+})
 Vue.config.productionTip = false
 /**
  * @description 全局注册应用配置
